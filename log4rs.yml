@@ -1,0 +1,49 @@
+# Scan this file for changes every 30 seconds
+refresh_rate: 30 seconds
+
+appenders:
+  # An appender named "stdout" that writes to stdout
+  stdout:
+    kind: console
+    filters:
+      - kind: threshold
+        level: debug
+    encoder:
+      pattern: "{d(%H:%M:%S%.3f)} {h({l:<5.5})} {t} - {m}{n}"
+
+  # An appender named "detailed" that writes to a file with a custom pattern encoder
+  detailed:
+    kind: file
+    path: "log/detail.log"
+    append: false
+    encoder:
+      #kind: json      
+      pattern: "{d(%H:%M:%S%.3f)} {h({l:<5.5})} {f} {L} {t} - {m}{n}"
+
+  vulkan:
+    kind: file
+    path: "log/vulkan.log"
+    append: false
+    encoder:
+      pattern: "{d(%H:%M:%S%.3f)} {h({l:<5.5})} {t} - {m}{n}"
+
+
+# Set the default logging level to "info" and attach the "stdout" appender to the root
+root:
+  level: trace
+  appenders:
+    - stdout
+    - detailed
+
+loggers:
+  vulkan:
+    level: debug
+    appenders:
+      - vulkan
+    additive: false
+
+  winit:
+    level: warn
+    appenders:
+      - stdout
+    additive: false
