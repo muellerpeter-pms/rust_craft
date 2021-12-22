@@ -1,0 +1,6 @@
+{
+    "logViewer.watch": [
+        "./log/client.log",
+        "./log/vulkan.log",
+    ]
+}
